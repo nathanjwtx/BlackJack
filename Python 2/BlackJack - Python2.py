@@ -10,7 +10,6 @@ import random as r
 
 
 class Deck:
-    # deck = set()
 
     def __init__(self):
         self.cards = ['A', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -22,7 +21,6 @@ class Deck:
         for card in range(0, len(self.cards)):
             for suit in range(0, len(self.suits)):
                 self.new_deck.append(self.cards[card] + self.suits[suit])
-        # self.deck = set(self.new_deck)
         r.shuffle(self.new_deck)
         return self.new_deck
 
@@ -156,8 +154,6 @@ def play_hand(players, player_count, dealer):
     for p in range(0, player_count):
         stick = players[p].get_stick
         while stick == "no":
-            # print(players[p].get_stick())
-            # if hand_total(players[p].get_hand()) > 21:
             if players[p].get_score() > 21:
                 players[p].set_stick("bust")
                 print(players[p].get_name() + " is bust")
@@ -190,7 +186,6 @@ def play_hand(players, player_count, dealer):
             if 17 < dealer.get_score() <= 21:
                 dealer.set_stick("yes")
                 print("Dealer sticks on " + str(dealer.get_score()))
-                # winners(player_count, players, dealer)
                 break
             elif dealer.get_score() > 21:
                 dealer.set_stick("bust")
@@ -204,7 +199,6 @@ def play_hand(players, player_count, dealer):
             players.remove(players[p])
             player_count -= 1
         else:
-            # print(winners(p, players, dealer))
             print(players[p].get_name() + ' ' + players[p].get_result +
                   '\nNew balance is: $' +
                   str(players[p].get_money))
@@ -219,9 +213,7 @@ def play_hand(players, player_count, dealer):
 
 def winners(p, players, dealer):
     # determine wager result
-    # for p in range(0, player_count):
     if players[p].get_stick == 'bust':
-        # print(players[p].get_name() + " loses")
         players[p].set_result('lost')
     elif dealer.get_stick == "bust" and players[p].get_stick != "bust":
         if players[p].get_score() == 21 and len(players[p].get_hand()) == 2:
