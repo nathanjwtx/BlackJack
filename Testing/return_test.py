@@ -1,5 +1,5 @@
 import save_data
-a = save_data.main()
+a = save_data.main('nathan')
 
 for z in a:
     print(z[0])
