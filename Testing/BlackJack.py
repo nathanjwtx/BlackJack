@@ -1,10 +1,12 @@
 import random as r
 
+
 class Deck:
     # deck = set()
 
     def __init__(self):
-        self.cards = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
+        self.cards = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J',
+                      'Q', 'K']
         self.suits = ['c', 'd', 'h', 's']
         self.new_deck = []
 
@@ -25,9 +27,10 @@ class Deck:
 
 
 class Player:
-# minimum bet is $10
+    # minimum bet is $10
 
-    def __init__(self, name="Dealer", score=0, bet=10, money=100, stick="no", result=''):
+    def __init__(self, name="Dealer", score=0, bet=10, money=100, stick="no",
+                 result=''):
         self.name = name
         self.money = money
         self.hand = []
@@ -110,11 +113,12 @@ def play_hand(players, player_count, dealer):
     for x in range(0, len(players)):
         players[x].set_stick('no')
         players[x].make_hand()
-        #print('New hand: ' + str(players[x].get_hand()))
+        # print('New hand: ' + str(players[x].get_hand()))
         opening = int(input("How much is opening bet? $"))
         players[x].set_money(-1 * opening)
         players[x].set_bet(opening)
-        print(players[x].get_name() + " you have #" + str(players[x].get_money) + " remaining")
+        print(players[x].get_name() + " you have #" +
+              str(players[x].get_money) + " remaining")
 
     # deal cards to hands
     for z in range(0, 2):
@@ -151,10 +155,12 @@ def play_hand(players, player_count, dealer):
                 players[p].set_stick("bust")
                 print(players[p].get_name() + " is bust")
                 break
-            elif input(players[p].get_name() + " would you like to stick? Y or N \n").lower() != "y":
+            elif input(players[p].get_name() +
+                       " would you like to stick? Y or N \n").lower() != "y":
                 players[p].update_hand(deck.deal_card())
                 display_hand(players[p])
-                new_score = str(hand_total(players[p].get_hand(), players[p].get_score(), False))
+                new_score = str(hand_total(players[p].get_hand(),
+                                           players[p].get_score(), False))
                 players[p].set_score(int(new_score))
                 print(players[p].get_name() + " has " + new_score)
             else:
@@ -170,7 +176,8 @@ def play_hand(players, player_count, dealer):
         while dealer.get_score() < 17:
             dealer.update_hand(deck.deal_card())
             display_dealer(dealer.get_hand())
-            dealer.set_score(hand_total(dealer.get_hand(), dealer.get_score(), True))
+            dealer.set_score(hand_total(dealer.get_hand(), dealer.get_score(),
+                                        True))
             print("Dealer has: " + str(dealer.get_score()))
             if 17 < dealer.get_score() <= 21:
                 dealer.set_stick("yes")
@@ -190,8 +197,8 @@ def play_hand(players, player_count, dealer):
             player_count -= 1
         else:
             # print(winners(p, players, dealer))
-            print(players[p].get_name() + ' ' + players[p].get_result + '\nNew balance is: $' +
-                  str(players[p].get_money))
+            print(players[p].get_name() + ' ' + players[p].get_result +
+                  '\nNew balance is: $' + str(players[p].get_money))
 
     if player_count == bust_count:
         print('Thanks for playing')
