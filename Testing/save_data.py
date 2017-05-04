@@ -36,7 +36,7 @@ def get_data(player):
     db = sql.connect('c:/blackjack/game_save.sqlite')
     cursor = db.cursor()
     players = cursor.execute('''
-        SELECT player_id, player_name, bank_roll FROM players
+        SELECT bank_roll FROM players
         WHERE player_name = :player_name
     ''', {"player_name": player})
     return players

@@ -1,4 +1,5 @@
 import random as r
+import save_data as game_save
 
 
 class Deck:
@@ -99,10 +100,18 @@ def black_jack():
     player_count = int(input("Enter the number of players: "))
 
     for x in range(0, player_count):
-        name = input("Enter the name of Player " + str(x+1) + ": ")
-        name = Player(name)
+        player_name = input("Enter the name of Player " + str(x+1) + ": ")
+        name = Player(player_name)
+        played_before = input('Do you have a saved game? Y or N')
+        if played_before.upper() == 'Y':
+            print(load_save(player_name))
         players.append(name)
     play_hand(players, player_count, dealer)
+
+
+def load_save(player_name):
+    a = game_save.main(player_name)
+    print(a)
 
 
 def play_hand(players, player_count, dealer):
