@@ -103,15 +103,18 @@ def black_jack():
         player_name = input("Enter the name of Player " + str(x+1) + ": ")
         name = Player(player_name)
         played_before = input('Do you have a saved game? Y or N')
-        if played_before.upper() == 'Y':
-            print(load_save(player_name))
         players.append(name)
+        if played_before.upper() == 'Y':
+            previous_winnings = load_save(player_name)
+            # need to rewrite this and adjust the class
+            players[x].money = previous_winnings
     play_hand(players, player_count, dealer)
 
 
 def load_save(player_name):
     a = game_save.main(player_name)
-    print(a)
+    for z in a:
+        return z[0]
 
 
 def play_hand(players, player_count, dealer):
