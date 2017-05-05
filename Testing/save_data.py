@@ -8,7 +8,7 @@ import sqlite3 as sql
 import os
 
 
-def main(player):
+def main(previous, player):
     # test for folder and create if missing
     if not os.path.exists('C:/BlackJack/'):
         os.mkdir('C:/BlackJack/')
@@ -31,15 +31,17 @@ def create_tables():
     db.close()
 
 
-def get_data(player):
-    # return list of saved players details
+def add_player(player):
     db = sql.connect('c:/blackjack/game_save.sqlite')
     cursor = db.cursor()
-    players = cursor.execute('''
-        SELECT bank_roll FROM players
-        WHERE player_name = :player_name
-    ''', {"player_name": player})
-    return players
+    cursor.execute('''
+        INSERT INTO players(player_name, bank_roll)
+        VALUES('nathan', 50.00)
+    ''')
+
+
+
+
 
 if __name__ == '__main__':
-    main(player)
+    main(previous, player)

@@ -1,5 +1,10 @@
-import save_data
-a = save_data.main('nathan')
+import return_data as gs
+
+player = input('Enter name: ').upper()
+
+a = gs.get_data(player)
 print(a)
 for z in a:
-    print(z[0])
+    print('Saved games where name = ' + z[1])
+    print('ID' + ' ' + "Winnings")
+    print(str(z[0]) + ' ' + str(z[2]))
