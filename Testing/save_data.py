@@ -7,21 +7,31 @@ N Waterman 04-18-17 v1.0
 import sqlite3 as sql
 import os
 
+save_file=''
 
 def main(previous, player):
-    # test for folder and create if missing
-    if not os.path.exists('C:/BlackJack/'):
-        os.mkdir('C:/BlackJack/')
+    global save_file
+
+    if os.name == 'nt':
+        # test for folder and create if missing
+        if not os.path.exists('C:/BlackJack/'):
+            os.mkdir('C:/BlackJack/')
+
+        save_file = 'C:/BlackJack/game_save.sqlite'
     else:
-        if not os.path.isfile('C:/BlackJack/game_save.sqlite'):
-            create_tables()
-        else:
-            return get_data(player)
+        save_file = os.path.expanduser('~/.blackjack_game_save.sqlite')
+
+    if not os.path.isfile(save_file):
+        create_tables()
+    else:
+        return get_data(player)
 
 
 def create_tables():
+    global save_file
+
     # create tables on first run of game
-    db = sql.connect('C:/BlackJack/game_save.sqlite')
+    db = sql.connect(save_file)
     cursor = db.cursor()
     cursor.execute('''
         CREATE TABLE players(player_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -32,7 +42,8 @@ def create_tables():
 
 
 def add_player(player):
-    db = sql.connect('c:/blackjack/game_save.sqlite')
+    global save_file
+    db = sql.connect(save_file)
     cursor = db.cursor()
     cursor.execute('''
         INSERT INTO players(player_name, bank_roll)
