@@ -1,107 +1,17 @@
-import random as r
-import save_data as game_save
 
-
-class Deck:
-    # deck = set()
-
-    def __init__(self):
-        self.cards = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J',
-                      'Q', 'K']
-        self.suits = ['c', 'd', 'h', 's']
-        self.new_deck = []
-
-    def make_deck(self):
-        for card in range(0, len(self.cards)):
-            for suit in range(0, len(self.suits)):
-                self.new_deck.append(self.cards[card] + self.suits[suit])
-        # self.deck = set(self.new_deck)
-        r.shuffle(self.new_deck)
-        return self.new_deck
-
-    def deal_card(self):
-        if len(self.new_deck) == 0:
-            self.make_deck()
-        else:
-            card = self.new_deck.pop()
-            return card
-
-
-class Player:
-    # minimum bet is $10
-
-    def __init__(self, name="Dealer", score=0, bet=10, money=100, stick="no",
-                 result=''):
-        self.name = name
-        self.money = money
-        self.hand = []
-        self.score = score
-        self.stick = stick
-        self.bet = bet
-        self.result = result
-
-    def set_name(self):
-        self.name = input("Enter your name: ")
-
-    def set_money(self, winnings):
-        if self.name == "Dealer":
-            self.money = 1000
-        else:
-            self.money += winnings
-
-    def set_bet(self, bet):
-        self.bet = bet
-
-    def set_result(self, result):
-        self.result = result
-
-    @property
-    def get_result(self):
-        return self.result
-
-    @property
-    def get_bet(self):
-        return self.bet
-
-    @property
-    def get_money(self):
-        return self.money
-
-    def get_name(self):
-        return self.name
-
-    def make_hand(self):
-        self.hand = []
-
-    def update_hand(self, card):
-        self.hand.append(card)
-
-    def get_hand(self):
-        return self.hand
-
-    def set_stick(self, stick):
-        self.stick = stick
-
-    @property
-    def get_stick(self):
-        return self.stick
-
-    def set_score(self, score):
-        self.score = score
-
-    def get_score(self):
-        return self.score
-
+import SaveGameFiles.save_data as game_save
+import GameFiles.deck as d
+import GameFiles.player as p
 
 def black_jack():
 
-    dealer = Player()
+    dealer = p.Player()
     players = []
     player_count = int(input("Enter the number of players: "))
 
     for x in range(0, player_count):
         player_name = input("Enter the name of Player " + str(x+1) + ": ")
-        name = Player(player_name)
+        name = p.Player(player_name)
         played_before = input('Do you have a saved game? Y or N')
         players.append(name)
         if played_before.upper() == 'Y':
@@ -119,7 +29,7 @@ def load_save(player_name):
 
 def play_hand(players, player_count, dealer):
     # make new deck for each hand to ensure odds are same
-    deck = Deck()
+    deck = d.Deck()
     deck.make_deck()
     # make empty hands
     for x in range(0, len(players)):
